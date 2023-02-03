@@ -15,12 +15,19 @@ export default function DropdownMenu() {
   return (
     <div className="mr-auto ml-4">
       <Button
-        className="text-white hover:bg-transparent p-0 md:p-2 font-light"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        style={{
+          color: "white",
+          padding: "8px",
+          fontWeight: 300,
+          textTransform: "none",
+          fontFamily: "inherit",
+          fontSize: "16px",
+        }}
       >
         Browse
       </Button>

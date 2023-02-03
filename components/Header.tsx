@@ -62,7 +62,7 @@ export default function Header() {
         />
       </Link>
       {windowWidth > 991 ? menuLinks : <DropdownMenu />}
-      <div className="flex space-x-5 items-center text-white">
+      <div className="flex space-x-3 md:space-x-5 items-center text-white">
         <AiOutlineSearch className="icon link" />
         <AiOutlineBell className="icon link" />
         <Image src={pingu} className="icon cursor-pointer" alt="user icon" />
