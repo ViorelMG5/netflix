@@ -55,12 +55,15 @@ export default function Header() {
       }`}
     >
       <Link href="/" className="shrink-0">
-        <Image src={logo} alt={"netflix logo"} width={100} height={100} />
+        <Image
+          src={logo}
+          alt={"netflix logo"}
+          className="w-[70px] md:w-[100px]"
+        />
       </Link>
       {windowWidth > 991 ? menuLinks : <DropdownMenu />}
       <div className="flex space-x-5 items-center text-white">
         <AiOutlineSearch className="icon link" />
-        <p className="link">Kids</p>
         <AiOutlineBell className="icon link" />
         <Image src={pingu} className="icon cursor-pointer" alt="user icon" />
       </div>

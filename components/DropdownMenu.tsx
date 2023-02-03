@@ -15,7 +15,7 @@ export default function DropdownMenu() {
   return (
     <div className="mr-auto ml-4">
       <Button
-        className="text-white hover:bg-transparent"
+        className="text-white hover:bg-transparent p-0 md:p-2 font-light"
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
