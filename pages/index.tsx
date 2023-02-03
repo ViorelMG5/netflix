@@ -38,7 +38,7 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className=" h-screen lg:h-[140vh]  ">
+      <main className=" h-screen lg:h-[140vh] bg-gradient-to-b ">
         <Banner topRated={netflixOriginals} />
 
         {/* Row */}
