@@ -50,7 +50,7 @@ export default function Header() {
   );
   return (
     <header
-      className={`flex justify-between items-center  fixed w-full top-0 py-5 px-10 ${
+      className={`flex justify-between items-center  fixed w-full top-0 py-5 px-3 md:px-10 ${
         scrolled && "bg-[#141414]"
       }`}
     >

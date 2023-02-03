@@ -18,7 +18,7 @@ export default function Banner({ topRated }: Props) {
   return (
     <div
       style={{ backgroundImage: `url(${baseUrl}${show?.backdrop_path})` }}
-      className="px-10 h-screen pt-20 bg-cover bg-gradient-to-b"
+      className="px-3 md:px-10 h-screen pt-20 bg-cover bg-gradient-to-b"
     >
       <div className="mt-[20vh] md:max-w-[60vw] lg:max-w-[40vw]">
         <h1 className="font-bold mb-2">{show?.title}</h1>
