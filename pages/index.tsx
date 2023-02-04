@@ -5,6 +5,10 @@ import Banner from "@/components/Banner";
 import Header from "@/components/Header";
 import requests from "@/utils/request";
 import { Movie } from "@/typings";
+import Row from "@/components/Row";
+import { useRecoilState } from "recoil";
+import { modalState } from "@/atoms/atoms";
+import MovieModal from "@/components/MovieModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +33,7 @@ export default function Home({
   romanceMovies,
   documentaries,
 }: Props) {
+  const modalOpen = useRecoilState(modalState);
   return (
     <>
       <Head>
@@ -40,12 +45,16 @@ export default function Home({
       <Header />
       <main className=" h-screen lg:h-[140vh] bg-gradient-to-b ">
         <Banner topRated={netflixOriginals} />
-
-        {/* Row */}
-        {/* Row */}
-        {/* Row */}
-        {/* Row */}
-        {/* Row */}
+        <div className="mt-[10vh] pl-3 md:px-10 space-y-10 ">
+          <Row title="Trending Now" shows={trendingNow} />
+          <Row title="Top Rated" shows={topRated} />
+          <Row title="Action Thrillers" shows={actionMovies} />
+          <Row title="Comedies" shows={comedyMovies} />
+          <Row title="Scary Movies" shows={horrorMovies} />
+          <Row title="Romance Movies" shows={romanceMovies} />
+          <Row title="Documentaries" shows={documentaries} />
+        </div>
+        {modalOpen && <MovieModal />}
       </main>
     </>
   );

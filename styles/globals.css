@@ -15,11 +15,23 @@
   .icon {
     @apply w-6 h-6;
   }
+  .icon-lg {
+    @apply w-8 h-8;
+  }
   .link {
     @apply cursor-pointer hover:text-[#B3b3b3];
   }
   .button-primary {
     @apply flex items-center gap-2  py-2 px-6 rounded;
+  }
+  .arrow {
+    @apply w-6 h-6 flex-shrink-0 absolute top-[30px] bottom-0 m-auto cursor-pointer z-10;
+  }
+  .modalButton {
+    @apply flex h-11 w-11 items-center justify-center rounded-full border-2 border-[gray] bg-[#2a2a2a]/60 transition hover:border-white hover:bg-white/10;
+  }
+  .title-sm {
+    @apply text-sm mr-1 text-gray-400;
   }
 }
 

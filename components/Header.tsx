@@ -8,20 +8,17 @@ import DropdownMenu from "./DropdownMenu";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [windowWidth, setWindowWitdh] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 0
-  );
+  const [windowWidth, setWindowWitdh] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => setWindowWitdh(window.innerWidth);
     if (typeof window !== "undefined") {
+      setWindowWitdh(window.innerWidth);
+      const handleResize = () => setWindowWitdh(window.innerWidth);
       window.addEventListener("resize", handleResize);
-    }
-    return () => {
-      if (typeof window !== "undefined") {
+      return () => {
         window.removeEventListener("resize", handleResize);
-      }
-    };
+      };
+    }
   }, []);
 
   useEffect(() => {
