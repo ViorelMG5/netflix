@@ -5,11 +5,12 @@ import { AiOutlineBell, AiOutlineSearch } from "react-icons/ai";
 import pingu from "../public/pingu.png";
 import { useEffect, useRef, useState } from "react";
 import DropdownMenu from "./DropdownMenu";
+import useAuth from "@/hooks/useAuth";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [windowWidth, setWindowWitdh] = useState(0);
-
+  const { logout } = useAuth();
   useEffect(() => {
     if (typeof window !== "undefined") {
       setWindowWitdh(window.innerWidth);
@@ -62,7 +63,12 @@ export default function Header() {
       <div className="flex space-x-3 md:space-x-5 items-center text-white">
         <AiOutlineSearch className="icon link" />
         <AiOutlineBell className="icon link" />
-        <Image src={pingu} className="icon cursor-pointer" alt="user icon" />
+        <Image
+          onClick={logout}
+          src={pingu}
+          className="icon cursor-pointer"
+          alt="user icon"
+        />
       </div>
     </header>
   );
