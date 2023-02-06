@@ -9,6 +9,11 @@ import Row from "@/components/Row";
 import { useRecoilState } from "recoil";
 import { modalState } from "@/atoms/atoms";
 import MovieModal from "@/components/MovieModal";
+import Plans from "@/components/Plans";
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import payments from "@/lib/stripe";
+import useAuth from "@/hooks/useAuth";
+import useSubscription from "@/hooks/useSubscription";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +26,7 @@ interface Props {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
+  products: Product[];
 }
 
 export default function Home({
@@ -32,8 +38,16 @@ export default function Home({
   horrorMovies,
   romanceMovies,
   documentaries,
+  products,
 }: Props) {
   const modalOpen = useRecoilState(modalState);
+  const { loading, user } = useAuth();
+  const subscription = useSubscription(user);
+
+  if (loading || subscription === null) return null;
+  if (!subscription) {
+    return <Plans products={products} />;
+  }
   return (
     <>
       <Head>
@@ -59,7 +73,15 @@ export default function Home({
     </>
   );
 }
+
 export const getServerSideProps = async () => {
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true,
+  })
+    .then((res) => res)
+    .catch((error) => console.log(error.message));
+
   const [
     netflixOriginals,
     trendingNow,
@@ -90,6 +112,7 @@ export const getServerSideProps = async () => {
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
+      products,
     },
   };
 };

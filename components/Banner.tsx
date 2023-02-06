@@ -14,7 +14,6 @@ export default function Banner({ topRated }: Props) {
   useEffect(() => {
     setShow(topRated[Math.floor(Math.random() * topRated.length)]);
   }, []);
-  console.log();
   return (
     <div className="px-3 md:px-10  pt-20 bg-cover ">
       <div className="absolute top-0 left-0 -z-10 h-[100%] w-screen">
