@@ -63,12 +63,9 @@ export default function Header() {
       <div className="flex space-x-3 md:space-x-5 items-center text-white">
         <AiOutlineSearch className="icon link" />
         <AiOutlineBell className="icon link" />
-        <Image
-          onClick={logout}
-          src={pingu}
-          className="icon cursor-pointer"
-          alt="user icon"
-        />
+        <Link href="/account">
+          <Image src={pingu} className="icon cursor-pointer" alt="user icon" />
+        </Link>
       </div>
     </header>
   );

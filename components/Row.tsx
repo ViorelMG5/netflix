@@ -1,6 +1,8 @@
 import { currentMovie, modalState } from "@/atoms/atoms";
 import { baseUrl } from "@/constants/movie";
+import { db } from "@/firebase";
 import { Movie } from "@/typings";
+import { DocumentData } from "firebase/firestore";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -8,7 +10,7 @@ import { useRecoilState } from "recoil";
 
 interface Props {
   title: String;
-  shows: Movie[];
+  shows: Movie[] | DocumentData;
 }
 
 export default function Row({ title, shows }: Props) {
@@ -46,7 +48,7 @@ export default function Row({ title, shows }: Props) {
         ref={rowRef}
         className="flex space-x-2  overflow-x-auto scrollbar-hide"
       >
-        {shows.map((show) => (
+        {shows.map((show: Movie) => (
           <Image
             onClick={() => handleClick(show)}
             key={show.id}

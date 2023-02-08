@@ -7,7 +7,20 @@ import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player/youtube";
 import { Element, Genre, Movie } from "@/typings";
-import { AiOutlineClose, AiFillLike } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineCloseCircle,
+  AiFillLike,
+} from "react-icons/ai";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  setDoc,
+  DocumentData,
+  onSnapshot,
+} from "firebase/firestore";
+
 import { GiPauseButton } from "react-icons/gi";
 import {
   BsPlayFill,
@@ -15,18 +28,9 @@ import {
   BsFillVolumeUpFill,
   BsVolumeMuteFill,
 } from "react-icons/bs";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { db } from "@/firebase";
+import useAuth from "@/hooks/useAuth";
+import toast from "react-hot-toast";
 
 export default function MovieModal() {
   const [open, setOpen] = useRecoilState(modalState);
@@ -34,8 +38,10 @@ export default function MovieModal() {
   const [movie, setMovie] = useRecoilState(currentMovie);
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(true);
-  const handleClose = () => setOpen(false);
+  const [addedToList, setAddedToList] = useState(false);
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [movies, setMovies] = useState<DocumentData[] | Movie[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!movie) return;
@@ -60,8 +66,58 @@ export default function MovieModal() {
     }
     fetchMovie();
   }, [movie]);
+  useEffect(() => {
+    if (user) {
+      return onSnapshot(
+        collection(db, "customers", user.uid, "myList"),
+        (snapshot) => setMovies(snapshot.docs)
+      );
+    }
+  }, [db, movie?.id]);
 
-  console.log(movie);
+  const handleList = async () => {
+    if (addedToList) {
+      await deleteDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!)
+      );
+
+      toast(
+        `${movie?.title || movie?.original_name} has been removed from My List`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      );
+    } else {
+      await setDoc(
+        doc(db, "customers", user!.uid, "myList", movie?.id.toString()!),
+        {
+          ...movie,
+        }
+      );
+
+      toast(
+        `${movie?.title || movie?.original_name} has been added to My List.`,
+        {
+          duration: 8000,
+          style: toastStyle,
+        }
+      );
+    }
+  };
+
+  useEffect(
+    () =>
+      setAddedToList(
+        movies.findIndex((result) => result.data().id === movie?.id) !== -1
+      ),
+    [movies]
+  );
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
       <Modal
@@ -103,7 +159,14 @@ export default function MovieModal() {
                 )}
               </button>
               <button>
-                <BsPlusCircle className="icon-lg" />
+                {addedToList ? (
+                  <BsPlusCircle onClick={handleList} className="icon-lg" />
+                ) : (
+                  <AiOutlineCloseCircle
+                    onClick={handleList}
+                    className="icon-lg"
+                  />
+                )}
               </button>
               <button>
                 <AiFillLike className="icon-lg" />
@@ -121,7 +184,7 @@ export default function MovieModal() {
             <div className="flex space-x-3">
               {movie?.popularity && (
                 <span className="text-[#4ACF54] font-medium">
-                  {Math.floor(movie?.popularity)}% Match
+                  {Math.floor(movie?.vote_average * 10)}% Match
                 </span>
               )}
               <span className="text-[#ffffff90]">{movie?.release_date}</span>
@@ -152,3 +215,25 @@ export default function MovieModal() {
     </div>
   );
 }
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const toastStyle = {
+  background: "white",
+  color: "black",
+  fontWeight: "bold",
+  fontSize: "16px",
+  padding: "15px",
+  borderRadius: "9999px",
+  maxWidth: "1000px",
+};

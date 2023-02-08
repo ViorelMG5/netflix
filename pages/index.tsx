@@ -14,6 +14,7 @@ import { getProducts, Product } from "@stripe/firestore-stripe-payments";
 import payments from "@/lib/stripe";
 import useAuth from "@/hooks/useAuth";
 import useSubscription from "@/hooks/useSubscription";
+import useList from "@/hooks/useList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,8 +43,8 @@ export default function Home({
 }: Props) {
   const modalOpen = useRecoilState(modalState);
   const { loading, user } = useAuth();
+  const list = useList(user?.uid);
   const subscription = useSubscription(user);
-
   if (loading || subscription === null) return null;
   if (!subscription) {
     return <Plans products={products} />;
@@ -62,6 +63,8 @@ export default function Home({
         <div className="mt-[10vh] pl-3 md:px-10 space-y-10 ">
           <Row title="Trending Now" shows={trendingNow} />
           <Row title="Top Rated" shows={topRated} />
+          {list.length > 0 && <Row title="My List" shows={list} />}
+
           <Row title="Action Thrillers" shows={actionMovies} />
           <Row title="Comedies" shows={comedyMovies} />
           <Row title="Scary Movies" shows={horrorMovies} />
