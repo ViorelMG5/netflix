@@ -4,13 +4,22 @@ import { baseUrl } from "@/constants/movie";
 import { BsPlayFill } from "react-icons/bs";
 import { AiFillInfoCircle } from "react-icons/ai";
 import Image from "next/image";
-import { ReadMoreMore, AdvReadMoreMore } from "read-more-more";
 
 interface Props {
   topRated: Movie[];
 }
 export default function Banner({ topRated }: Props) {
   const [show, setShow] = useState<Movie | null>();
+  const [showMore, setShowMore] = useState(false);
+
+  console.log(showMore);
+  const toggleShowMore = () => setShowMore(!showMore);
+  const excerpt = show?.overview.split(" ").slice(0, 30).join(" ");
+
+  useEffect(() => {
+    show?.overview.length &&
+      (show?.overview.length > 30 ? setShowMore(true) : setShowMore(false));
+  }, [show]);
 
   useEffect(() => {
     setShow(topRated[Math.floor(Math.random() * topRated.length)]);
@@ -33,12 +42,11 @@ export default function Banner({ topRated }: Props) {
       <div className="mt-[10vh] md:max-w-[60vw] lg:max-w-[40vw] ">
         <h1 className="font-bold mb-2">{show?.title}</h1>
         <div className="description">
-          {show?.overview.length && (
-            <ReadMoreMore
-              text={show?.overview}
-              checkFor={300}
-              transDuration={0.5}
-            />
+          {showMore ? excerpt : <p>{show?.overview}</p>}
+          {showMore && (
+            <button className="block" onClick={toggleShowMore}>
+              Read More...
+            </button>
           )}
         </div>
 
