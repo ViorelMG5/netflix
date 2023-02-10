@@ -180,7 +180,7 @@ export default function MovieModal() {
               </button>
             </div>
           </div>
-          <div className="bg-[#181818] space-y-3 p-6 pt-16 md:pt-0 md:p-10">
+          <div className="bg-[#181818] space-y-3 p-6 pt-16 md:pt-5 md:p-10">
             <div className="flex space-x-3">
               {movie?.popularity && (
                 <span className="text-[#4ACF54] font-medium">
