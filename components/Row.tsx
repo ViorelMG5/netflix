@@ -56,7 +56,7 @@ export default function Row({ title, shows }: Props) {
             src={`${baseUrl}${show?.backdrop_path || show?.poster_path}`}
             width={150}
             height={150}
-            className="object-cover w-[300px] h-[150px] rounded hover:scale-[1.04] transition-all hover:transition-all cursor-pointer"
+            className="object-cover w-[300px] h-[150px] shrink-0 rounded hover:scale-[1.04] transition-all hover:transition-all cursor-pointer"
           />
         ))}
       </div>
