@@ -4,6 +4,7 @@ import { baseUrl } from "@/constants/movie";
 import { BsPlayFill } from "react-icons/bs";
 import { AiFillInfoCircle } from "react-icons/ai";
 import Image from "next/image";
+import { ReadMoreMore, AdvReadMoreMore } from "read-more-more";
 
 interface Props {
   topRated: Movie[];
@@ -29,9 +30,18 @@ export default function Banner({ topRated }: Props) {
           }}
         />
       </div>
-      <div className="mt-[10vh] md:max-w-[60vw] lg:max-w-[40vw]">
+      <div className="mt-[10vh] md:max-w-[60vw] lg:max-w-[40vw] ">
         <h1 className="font-bold mb-2">{show?.title}</h1>
-        <p className="description">{show?.overview}</p>
+        <div className="description">
+          {show?.overview.length && (
+            <ReadMoreMore
+              text={show?.overview}
+              checkFor={300}
+              transDuration={0.5}
+            />
+          )}
+        </div>
+
         <div className="flex gap-2 mt-5">
           <button className="button-primary bg-[#ffffff] text-black text-lg	hover:bg-[rgb(216,31,38)] hover:text-white">
             <BsPlayFill className="h-7 w-7" />

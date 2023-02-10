@@ -61,5 +61,12 @@ h1 {
 }
 
 .description {
-  font-size: calc(18px + (20 - 18) * ((100vw - 300px) / (1900 - 300)));
+  font-size: calc(16px + (20 - 16) * ((100vw - 300px) / (1900 - 300)));
+}
+.description button {
+  color: red;
+}
+
+.description button::after {
+  content: none;
 }

@@ -141,7 +141,7 @@ export default function MovieModal() {
               muted={muted}
               playing={playing}
             />
-            <div className="z-99 absolute bottom-5 left-5 flex items-center space-x-3">
+            <div className="z-99 absolute -bottom-12 md:bottom-5 left-5 md:left-10 flex items-center space-x-3">
               <button
                 onClick={() => setPlaying(!playing)}
                 className="button-primary bg-[#ffffff] text-black text-lg px-3 md:px-6 font-medium	hover:bg-[rgb(216,31,38)] py-1 fkex items-center  hover:text-white"
@@ -153,7 +153,7 @@ export default function MovieModal() {
                   </>
                 ) : (
                   <>
-                    <BsPlayFill className="icon-lg" />
+                    <BsPlayFill className="w-5 h-5 md:w-8 md:h-8" />
                     Play
                   </>
                 )}
@@ -180,7 +180,7 @@ export default function MovieModal() {
               </button>
             </div>
           </div>
-          <div className="bg-[#181818] space-y-3 p-6 md:p-10">
+          <div className="bg-[#181818] space-y-3 p-6 pt-16 md:pt-0 md:p-10">
             <div className="flex space-x-3">
               {movie?.popularity && (
                 <span className="text-[#4ACF54] font-medium">
