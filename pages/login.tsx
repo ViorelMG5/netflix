@@ -43,7 +43,7 @@ export default function Login() {
       />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-10 bg-[#000000]/90 space-y-4 flex flex-col md:min-w-[450px]"
+        className="p-5 md:p-10 bg-[#000000]/90 space-y-4 flex flex-col md:min-w-[450px]"
       >
         <h1 className="text-4xl mb-3 font-medium">Sign In</h1>
         <input
