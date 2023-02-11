@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../public/logo.svg";
-import { AiOutlineBell, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineBell } from "react-icons/ai";
 import pingu from "../public/pingu.png";
 import { useEffect, useRef, useState } from "react";
 import DropdownMenu from "./DropdownMenu";
 import useAuth from "@/hooks/useAuth";
+import Search from "./Search";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -61,7 +62,7 @@ export default function Header() {
       </Link>
       {windowWidth > 991 ? menuLinks : <DropdownMenu />}
       <div className="flex space-x-3 md:space-x-5 items-center text-white">
-        <AiOutlineSearch className="icon link" />
+        {windowWidth > 700 && <Search />}
         <AiOutlineBell className="icon link" />
         <Link href="/account">
           <Image src={pingu} className="icon cursor-pointer" alt="user icon" />

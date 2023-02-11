@@ -4,17 +4,25 @@ import { baseUrl } from "@/constants/movie";
 import { BsPlayFill } from "react-icons/bs";
 import { AiFillInfoCircle } from "react-icons/ai";
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { currentMovie, modalState } from "@/atoms/atoms";
 
 interface Props {
   topRated: Movie[];
 }
 export default function Banner({ topRated }: Props) {
-  const [show, setShow] = useState<Movie | null>();
+  const [show, setShow] = useState<Movie | null>(null);
   const [showMore, setShowMore] = useState(false);
+  const [modalSt, setModalSt] = useRecoilState(modalState);
+  const [movie, setMovie] = useRecoilState(currentMovie);
 
-  console.log(showMore);
   const toggleShowMore = () => setShowMore(!showMore);
   const excerpt = show?.overview.split(" ").slice(0, 30).join(" ");
+
+  const handleClick = () => {
+    setMovie(show);
+    setModalSt(true);
+  };
 
   useEffect(() => {
     show?.overview.length &&
@@ -55,7 +63,10 @@ export default function Banner({ topRated }: Props) {
             <BsPlayFill className="h-7 w-7" />
             Play
           </button>
-          <button className="button-primary bg-[#ffffff40] text-lg hover:bg-[#000]	">
+          <button
+            onClick={handleClick}
+            className="button-primary bg-[#ffffff40] text-lg hover:bg-[#000]	"
+          >
             More info
             <AiFillInfoCircle className="h-7 w-7" />
           </button>

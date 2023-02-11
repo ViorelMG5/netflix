@@ -30,7 +30,7 @@ import {
 } from "react-icons/bs";
 import { db } from "@/firebase";
 import useAuth from "@/hooks/useAuth";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function MovieModal() {
   const [open, setOpen] = useRecoilState(modalState);
@@ -120,6 +120,7 @@ export default function MovieModal() {
 
   return (
     <div>
+      <Toaster position="bottom-center" />
       <Modal
         open={open}
         onClose={handleClose}
@@ -137,7 +138,11 @@ export default function MovieModal() {
               className="absolute top-0  bottom-0 object-cover left-0 right-0 "
               width="100%"
               height="100%"
-              url={`https://www.youtube.com/watch?v=${trailer}`}
+              url={
+                trailer
+                  ? `https://www.youtube.com/watch?v=${trailer}`
+                  : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              }
               muted={muted}
               playing={playing}
             />
@@ -181,6 +186,11 @@ export default function MovieModal() {
             </div>
           </div>
           <div className="bg-[#181818] space-y-3 p-6 pt-16 md:pt-5 md:p-10">
+            {trailer === undefined && (
+              <span className="bg-red-700 py-1 px-2 rounded-md ">
+                No video but I hope you like the song!
+              </span>
+            )}
             <div className="flex space-x-3">
               {movie?.popularity && (
                 <span className="text-[#4ACF54] font-medium">
@@ -190,6 +200,7 @@ export default function MovieModal() {
               <span className="text-[#ffffff90]">{movie?.release_date}</span>
               <span className="text-sm border px-2 rounded">HD</span>
             </div>
+
             <div className="flex flex-col md:flex-row mt-3 md:mt-0 gap-2">
               <p className="font-light w-5/6">{movie?.overview}</p>
               <div className="flex flex-col space-y-2">
