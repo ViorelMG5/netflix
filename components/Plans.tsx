@@ -31,7 +31,7 @@ export default function Plans({ products }: Props) {
         <title>Netflix</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="p-5 border-b border-[#ffffff30]">
+      <header className="p-5 border-b bg-[#141414] border-[#ffffff30]">
         <Image src={logo} alt="brand logo" className="w-[90px] md:w-[150px]" />
         <button className="font-medium" onClick={logout}>
           Sign Out
