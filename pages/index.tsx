@@ -60,7 +60,7 @@ export default function Home({
       <Header />
       <main className=" h-screen lg:h-[140vh] bg-gradient-to-b ">
         <Banner topRated={netflixOriginals} />
-        <div className="mt-[10vh] pl-3 md:px-10 space-y-10 ">
+        <div className="mt-[10vh] pl-3 md:px-10 space-y-10 pb-10">
           <Row title="Trending Now" shows={trendingNow} />
           <Row title="Top Rated" shows={topRated} />
           {list.length > 0 && <Row title="My List" shows={list} />}

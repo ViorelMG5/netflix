@@ -23,7 +23,7 @@ export default function Account({ products }: Props) {
         <title>Netflix</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header className="p-5 border-b border-[#ffffff30]">
+      <header className="p-5 border-b bg-[#141414] border-[#ffffff30]">
         <Link href="/">
           <Image
             src={logo}
